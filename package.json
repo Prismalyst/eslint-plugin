@@ -1,0 +1,41 @@
+{
+  "name": "@prismalyst/eslint-plugin",
+  "version": "0.1.0",
+  "description": "ESLint plugin for Prismalyst. Detect unsafe Prisma queries and common mistakes directly in your code.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && npx rollup dist/index.js --file dist/index.cjs --format cjs",
+    "watch": "tsc -w",
+    "pack": "npm pack",
+    "pack:check": "npm pack --dry-run"
+  },
+  "dependencies": {
+    "@prismalyst/core": "file:../prismalyst-core",
+    "@typescript-eslint/utils": "^8.70.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0 <7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@typescript-eslint/rule-tester": "^8.70.0",
+    "eslint": "^10.10.0",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6",
+    "rollup": "^4.63.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.70.0"
+  }
+}
