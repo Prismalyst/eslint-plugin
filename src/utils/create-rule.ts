@@ -7,7 +7,7 @@ export interface PrismalystRuleDocs {
 }
 
 export const createRule = ESLintUtils.RuleCreator<PrismalystRuleDocs>(
-  (name) => `https://prismalyst.dev/rules/${name}`,
+  (name) => `https://github.com/Prismalyst/core/blob/main/src/rules/list/${name}.md`,
 );
 
 export type ESLintRule = ReturnType<typeof createRule>;
