@@ -6,6 +6,8 @@ import { RULES_LIST, convertToPrismaCall, createAstUtils, isPrismaCall } from '@
 
 import { ESLintRule, createRule } from '../utils/create-rule.js';
 
+const astUtils = createAstUtils(ts);
+
 export function createRulesList() {
   const rules: Record<string, ESLintRule> = {};
 
@@ -16,8 +18,6 @@ export function createRulesList() {
       create: function (context) {
         const services = ESLintUtils.getParserServices(context);
         const program = services.program;
-
-        const astUtils = createAstUtils(ts);
 
         return {
           CallExpression(node) {
