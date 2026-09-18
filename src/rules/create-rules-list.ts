@@ -25,11 +25,9 @@ export function createRulesList() {
 
             const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
 
-            if (!isValidPrismaCall) {
-              return;
-            }
+            if (!isValidPrismaCall) return;
 
-            const prismaCall = convertToPrismaCall(tsNode, astUtils);
+            const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
 
             const isTriggered = rule.function(prismaCall, rule);
 
