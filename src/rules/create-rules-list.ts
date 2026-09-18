@@ -5,6 +5,7 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { RULES_LIST, convertToPrismaCall, createAstUtils, isPrismaCall } from '@prismalyst/core';
 
 import { ESLintRule, createRule } from '../utils/create-rule.js';
+import { RULES_MAP } from './rules.map.js';
 
 const astUtils = createAstUtils(ts);
 
@@ -12,10 +13,14 @@ export function createRulesList() {
   const rules: Record<string, ESLintRule> = {};
 
   RULES_LIST.forEach((rule) => {
+    const eslintRule = RULES_MAP[rule.name];
+
+    if (eslintRule === undefined) return;
+
     rules[rule.name] = createRule({
       name: rule.name,
-      meta: rule.meta,
-      create: function (context) {
+      meta: eslintRule.meta,
+      create: function (context, [options = {}]) {
         const services = ESLintUtils.getParserServices(context);
         const program = services.program;
 
@@ -29,12 +34,13 @@ export function createRulesList() {
 
             const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
 
-            const isTriggered = rule.function(prismaCall, rule);
+            const isTriggered = rule.function(prismaCall, rule, options);
 
             if (isTriggered) {
               context.report({
                 node,
-                messageId: rule.messageId,
+                messageId: eslintRule.messageId,
+                data: options,
               });
             }
           },
