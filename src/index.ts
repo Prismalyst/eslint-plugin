@@ -1,5 +1,6 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 
+import { createConfigs } from './config/create-configs.js';
 import { createRulesList } from './rules/create-rules-list.js';
 
 const plugin: TSESLint.FlatConfig.Plugin = {
@@ -12,5 +13,12 @@ const plugin: TSESLint.FlatConfig.Plugin = {
   },
   configs: {},
 };
+
+const { all, recommended } = createConfigs(plugin);
+
+Object.assign(plugin.configs!, {
+  all,
+  recommended,
+});
 
 export default plugin;
