@@ -4,8 +4,10 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 
 import { RULES_LIST, convertToPrismaCall, createAstUtils, isPrismaCall } from '@prismalyst/core';
 
+import { PrismalystRuleDocs } from '../types/rule-docs.type.js';
 import { ESLintRule, createRule } from '../utils/create-rule.js';
 import { RULES_MAP } from './rules.map.js';
+import { isRuleName } from './utils/is-rule-name.js';
 
 const astUtils = createAstUtils(ts);
 
@@ -13,9 +15,9 @@ export function createRulesList() {
   const rules: Record<string, ESLintRule> = {};
 
   RULES_LIST.forEach((rule) => {
-    const eslintRule = RULES_MAP[rule.name];
+    if (!isRuleName(rule.name)) return;
 
-    if (eslintRule === undefined) return;
+    const eslintRule = RULES_MAP[rule.name] as PrismalystRuleDocs;
 
     rules[rule.name] = createRule({
       name: rule.name,

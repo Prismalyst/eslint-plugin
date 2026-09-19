@@ -1,10 +1,10 @@
 import { PrismalystRuleDocs } from '../types/rule-docs.type.js';
 
-export const RULES_MAP: Record<string, PrismalystRuleDocs> = {
+export const RULES_MAP = {
   'no-unsafe-raw-sql': {
     messageId: 'noUnsafeRawSQL',
     meta: {
-      type: 'problem',
+      type: 'suggestion',
       docs: {
         description: 'Disallow unsafe raw SQL',
         recommended: true,
@@ -20,7 +20,7 @@ export const RULES_MAP: Record<string, PrismalystRuleDocs> = {
   'no-dynamic-raw-query': {
     messageId: 'noDynamicRawQuery',
     meta: {
-      type: 'problem',
+      type: 'suggestion',
       docs: {
         description: 'Disallow dynamic raw query',
         recommended: true,
@@ -35,7 +35,7 @@ export const RULES_MAP: Record<string, PrismalystRuleDocs> = {
   'no-unsafe-prisma-raw': {
     messageId: 'noUnsafePrismaRaw',
     meta: {
-      type: 'problem',
+      type: 'suggestion',
       docs: {
         description: 'Disallow unsafe Prisma.raw()',
         recommended: true,
@@ -96,7 +96,7 @@ export const RULES_MAP: Record<string, PrismalystRuleDocs> = {
   'no-query-in-loop': {
     messageId: 'noQueryInLoop',
     meta: {
-      type: 'problem',
+      type: 'suggestion',
       docs: {
         description: 'Disallow Prisma queries inside a loop',
         recommended: true,
@@ -158,4 +158,4 @@ export const RULES_MAP: Record<string, PrismalystRuleDocs> = {
       defaultOptions: [{ max: 1_000, min: -1_000 }],
     },
   },
-};
+} as const satisfies Readonly<Record<string, PrismalystRuleDocs>>;
