@@ -31,10 +31,13 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
         '@prismalyst/require-where-update-many':
           RULES_SEVERITY_MAP[RULES_MAP['require-where-update-many'].meta.type],
         '@prismalyst/no-query-in-loop': RULES_SEVERITY_MAP[RULES_MAP['no-query-in-loop'].meta.type],
-        '@prismalyst/max-take': [RULES_SEVERITY_MAP[RULES_MAP['max-take'].meta.type], { max: 150 }],
+        '@prismalyst/max-take': [
+          RULES_SEVERITY_MAP[RULES_MAP['max-take'].meta.type],
+          RULES_MAP['max-take'].meta.defaultOptions[0],
+        ],
         '@prismalyst/no-deep-offset-pagination': [
           RULES_SEVERITY_MAP[RULES_MAP['no-deep-offset-pagination'].meta.type],
-          { max: 1_500, min: -1_500 },
+          RULES_MAP['no-deep-offset-pagination'].meta.defaultOptions[0],
         ],
       },
     },
