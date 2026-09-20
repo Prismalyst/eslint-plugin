@@ -2,7 +2,12 @@ import * as ts from 'typescript';
 
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { RULES_LIST, convertToPrismaCall, createAstUtils, isPrismaCall } from '@prismalyst/core';
+import {
+  RULES_LIST,
+  convertToPrismaExpression,
+  createAstUtils,
+  isPrismaExpression,
+} from '@prismalyst/core';
 
 import { PrismalystRuleDocs } from '../types/rule-docs.type.js';
 import { ESLintRule, createRule } from '../utils/create-rule.js';
@@ -36,13 +41,13 @@ export function createRulesList() {
               CallExpression(node) {
                 const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 
-                const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
+                const isValidPrismaExpression = isPrismaExpression(tsNode, program, astUtils);
 
-                if (!isValidPrismaCall) return;
+                if (!isValidPrismaExpression) return;
 
-                const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
+                const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-                const isTriggered = ruleFunction(prismaCall, rule, options);
+                const isTriggered = ruleFunction(prismaExpression, rule, options);
 
                 if (isTriggered) {
                   context.report({
@@ -58,13 +63,13 @@ export function createRulesList() {
               NewExpression(node) {
                 const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 
-                const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
+                const isValidPrismaExpression = isPrismaExpression(tsNode, program, astUtils);
 
-                if (!isValidPrismaCall) return;
+                if (!isValidPrismaExpression) return;
 
-                const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
+                const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-                const isTriggered = rule.function(prismaCall, rule, options);
+                const isTriggered = rule.function(prismaExpression, rule, options);
 
                 if (isTriggered) {
                   context.report({
