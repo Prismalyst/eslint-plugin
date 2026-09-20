@@ -158,4 +158,36 @@ export const RULES_MAP = {
       defaultOptions: [{ max: 1_000, min: -1_000 }],
     },
   },
+  'no-prisma-client-in-function': {
+    messageId: 'noPrismaClientInFunction',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow creating PrismaClient inside a request or service function',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noPrismaClientInFunction: 'Do not create PrismaClient inside a request or service function',
+      },
+      schema: [
+        {
+          type: 'object',
+          properties: {
+            ignoredFiles: { type: 'array', items: { type: 'string' } },
+            allowedFunctionsNames: { type: 'array', items: { type: 'string' } },
+            allowInTests: { type: 'boolean' },
+          },
+          additionalProperties: false,
+        },
+      ],
+      defaultOptions: [
+        {
+          ignoredFiles: [],
+          allowedFunctionsNames: ['main', 'seed'],
+          allowInTests: true,
+        },
+      ],
+    },
+  },
 } as const satisfies Readonly<Record<string, PrismalystRuleDocs>>;

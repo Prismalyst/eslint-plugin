@@ -39,6 +39,10 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
           RULES_SEVERITY_MAP[RULES_MAP['no-deep-offset-pagination'].meta.type],
           RULES_MAP['no-deep-offset-pagination'].meta.defaultOptions[0],
         ],
+        '@prismalyst/no-prisma-client-in-function': [
+          RULES_SEVERITY_MAP[RULES_MAP['no-prisma-client-in-function'].meta.type],
+          RULES_MAP['no-prisma-client-in-function'].meta.defaultOptions[0],
+        ],
       },
     },
     recommended: {
@@ -64,6 +68,10 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
         '@prismalyst/no-deep-offset-pagination': [
           RULES_SEVERITY_MAP[RULES_MAP['no-deep-offset-pagination'].meta.type],
           RULES_MAP['no-deep-offset-pagination'].meta.defaultOptions[0],
+        ],
+        '@prismalyst/no-prisma-client-in-function': [
+          RULES_SEVERITY_MAP[RULES_MAP['no-prisma-client-in-function'].meta.type],
+          RULES_MAP['no-prisma-client-in-function'].meta.defaultOptions[0],
         ],
       },
     },
