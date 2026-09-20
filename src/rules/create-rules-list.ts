@@ -19,34 +19,63 @@ export function createRulesList() {
 
     const eslintRule = RULES_MAP[rule.name] as PrismalystRuleDocs;
 
-    rules[rule.name] = createRule({
-      name: rule.name,
+    const ruleName = rule.name;
+    const ruleAstType = rule.astType;
+    const ruleFunction = rule.function;
+
+    rules[ruleName] = createRule({
+      name: ruleName,
       meta: eslintRule.meta,
       create: function (context, [options = {}]) {
         const services = ESLintUtils.getParserServices(context);
         const program = services.program;
 
-        return {
-          CallExpression(node) {
-            const tsNode = services.esTreeNodeToTSNodeMap.get(node);
+        switch (ruleAstType) {
+          case 'callExpression':
+            return {
+              CallExpression(node) {
+                const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 
-            const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
+                const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
 
-            if (!isValidPrismaCall) return;
+                if (!isValidPrismaCall) return;
 
-            const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
+                const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
 
-            const isTriggered = rule.function(prismaCall, rule, options);
+                const isTriggered = ruleFunction(prismaCall, rule, options);
 
-            if (isTriggered) {
-              context.report({
-                node,
-                messageId: eslintRule.messageId,
-                data: options,
-              });
-            }
-          },
-        };
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: options,
+                  });
+                }
+              },
+            };
+          case 'newExpression':
+            return {
+              NewExpression(node) {
+                const tsNode = services.esTreeNodeToTSNodeMap.get(node);
+
+                const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
+
+                if (!isValidPrismaCall) return;
+
+                const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
+
+                const isTriggered = rule.function(prismaCall, rule, options);
+
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: options,
+                  });
+                }
+              },
+            };
+        }
       },
     });
   });
