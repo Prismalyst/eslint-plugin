@@ -47,6 +47,9 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
           RULES_SEVERITY_MAP[RULES_MAP['no-disconnect-in-request-flow'].meta.type],
           RULES_MAP['no-disconnect-in-request-flow'].meta.defaultOptions[0],
         ],
+        '@prismalyst/no-root-client-in-transaction': [
+          RULES_SEVERITY_MAP[RULES_MAP['no-root-client-in-transaction'].meta.type],
+        ],
       },
     },
     recommended: {
@@ -80,6 +83,9 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
         '@prismalyst/no-disconnect-in-request-flow': [
           RULES_SEVERITY_MAP[RULES_MAP['no-disconnect-in-request-flow'].meta.type],
           RULES_MAP['no-disconnect-in-request-flow'].meta.defaultOptions[0],
+        ],
+        '@prismalyst/no-root-client-in-transaction': [
+          RULES_SEVERITY_MAP[RULES_MAP['no-root-client-in-transaction'].meta.type],
         ],
       },
     },

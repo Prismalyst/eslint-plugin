@@ -221,4 +221,20 @@ export const RULES_MAP = {
       ],
     },
   },
+  'no-root-client-in-transaction': {
+    messageId: 'noRootClientInTransaction',
+    meta: {
+      type: 'problem',
+      docs: {
+        description: 'Disallow using root client in transaction',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noRootClientInTransaction:
+          'Do not use root client in transaction, use transaction client instead',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies Readonly<Record<string, PrismalystRuleDocs>>;
