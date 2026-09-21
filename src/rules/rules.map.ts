@@ -190,4 +190,35 @@ export const RULES_MAP = {
       ],
     },
   },
+  'no-disconnect-in-request-flow': {
+    messageId: 'noDisconnectInRequestFlow',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow disconnecting PrismaClient in request flow',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noDisconnectInRequestFlow:
+          'Do not disconnect PrismaClient in request flow, disconnect during application shutdown',
+      },
+      schema: [
+        {
+          type: 'object',
+          properties: {
+            ignoredFiles: { type: 'array', items: { type: 'string' } },
+            allowInTests: { type: 'boolean' },
+          },
+          additionalProperties: false,
+        },
+      ],
+      defaultOptions: [
+        {
+          ignoredFiles: [],
+          allowInTests: true,
+        },
+      ],
+    },
+  },
 } as const satisfies Readonly<Record<string, PrismalystRuleDocs>>;

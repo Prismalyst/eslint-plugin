@@ -43,6 +43,10 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
           RULES_SEVERITY_MAP[RULES_MAP['no-prisma-client-in-function'].meta.type],
           RULES_MAP['no-prisma-client-in-function'].meta.defaultOptions[0],
         ],
+        '@prismalyst/no-disconnect-in-request-flow': [
+          RULES_SEVERITY_MAP[RULES_MAP['no-disconnect-in-request-flow'].meta.type],
+          RULES_MAP['no-disconnect-in-request-flow'].meta.defaultOptions[0],
+        ],
       },
     },
     recommended: {
@@ -72,6 +76,10 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
         '@prismalyst/no-prisma-client-in-function': [
           RULES_SEVERITY_MAP[RULES_MAP['no-prisma-client-in-function'].meta.type],
           RULES_MAP['no-prisma-client-in-function'].meta.defaultOptions[0],
+        ],
+        '@prismalyst/no-disconnect-in-request-flow': [
+          RULES_SEVERITY_MAP[RULES_MAP['no-disconnect-in-request-flow'].meta.type],
+          RULES_MAP['no-disconnect-in-request-flow'].meta.defaultOptions[0],
         ],
       },
     },
