@@ -2,7 +2,12 @@ import * as ts from 'typescript';
 
 import { ESLintUtils } from '@typescript-eslint/utils';
 
-import { RULES_LIST, convertToPrismaCall, createAstUtils, isPrismaCall } from '@prismalyst/core';
+import {
+  RULES_LIST,
+  convertToPrismaExpression,
+  createAstUtils,
+  isPrismaExpression,
+} from '@prismalyst/core';
 
 import { PrismalystRuleDocs } from '../types/rule-docs.type.js';
 import { ESLintRule, createRule } from '../utils/create-rule.js';
@@ -19,34 +24,63 @@ export function createRulesList() {
 
     const eslintRule = RULES_MAP[rule.name] as PrismalystRuleDocs;
 
-    rules[rule.name] = createRule({
-      name: rule.name,
+    const ruleName = rule.name;
+    const ruleAstType = rule.astType;
+    const ruleFunction = rule.function;
+
+    rules[ruleName] = createRule({
+      name: ruleName,
       meta: eslintRule.meta,
       create: function (context, [options = {}]) {
         const services = ESLintUtils.getParserServices(context);
         const program = services.program;
 
-        return {
-          CallExpression(node) {
-            const tsNode = services.esTreeNodeToTSNodeMap.get(node);
+        switch (ruleAstType) {
+          case 'callExpression':
+            return {
+              CallExpression(node) {
+                const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 
-            const isValidPrismaCall = isPrismaCall(tsNode, program, astUtils);
+                const isValidPrismaExpression = isPrismaExpression(tsNode, program, astUtils);
 
-            if (!isValidPrismaCall) return;
+                if (!isValidPrismaExpression) return;
 
-            const prismaCall = convertToPrismaCall(tsNode, program, astUtils);
+                const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-            const isTriggered = rule.function(prismaCall, rule, options);
+                const isTriggered = ruleFunction(prismaExpression, rule, options);
 
-            if (isTriggered) {
-              context.report({
-                node,
-                messageId: eslintRule.messageId,
-                data: options,
-              });
-            }
-          },
-        };
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: options,
+                  });
+                }
+              },
+            };
+          case 'newExpression':
+            return {
+              NewExpression(node) {
+                const tsNode = services.esTreeNodeToTSNodeMap.get(node);
+
+                const isValidPrismaExpression = isPrismaExpression(tsNode, program, astUtils);
+
+                if (!isValidPrismaExpression) return;
+
+                const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
+
+                const isTriggered = rule.function(prismaExpression, rule, options);
+
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: options,
+                  });
+                }
+              },
+            };
+        }
       },
     });
   });

@@ -158,4 +158,83 @@ export const RULES_MAP = {
       defaultOptions: [{ max: 1_000, min: -1_000 }],
     },
   },
+  'no-prisma-client-in-function': {
+    messageId: 'noPrismaClientInFunction',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow creating PrismaClient inside a request or service function',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noPrismaClientInFunction: 'Do not create PrismaClient inside a request or service function',
+      },
+      schema: [
+        {
+          type: 'object',
+          properties: {
+            ignoredFiles: { type: 'array', items: { type: 'string' } },
+            allowedFunctionsNames: { type: 'array', items: { type: 'string' } },
+            allowInTests: { type: 'boolean' },
+          },
+          additionalProperties: false,
+        },
+      ],
+      defaultOptions: [
+        {
+          ignoredFiles: [],
+          allowedFunctionsNames: ['main', 'seed'],
+          allowInTests: true,
+        },
+      ],
+    },
+  },
+  'no-disconnect-in-request-flow': {
+    messageId: 'noDisconnectInRequestFlow',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow disconnecting PrismaClient in request flow',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noDisconnectInRequestFlow:
+          'Do not disconnect PrismaClient in request flow, disconnect during application shutdown',
+      },
+      schema: [
+        {
+          type: 'object',
+          properties: {
+            ignoredFiles: { type: 'array', items: { type: 'string' } },
+            allowInTests: { type: 'boolean' },
+          },
+          additionalProperties: false,
+        },
+      ],
+      defaultOptions: [
+        {
+          ignoredFiles: [],
+          allowInTests: true,
+        },
+      ],
+    },
+  },
+  'no-root-client-in-transaction': {
+    messageId: 'noRootClientInTransaction',
+    meta: {
+      type: 'problem',
+      docs: {
+        description: 'Disallow using root client in transaction',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noRootClientInTransaction:
+          'Do not use root client in transaction, use transaction client instead',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies Readonly<Record<string, PrismalystRuleDocs>>;
