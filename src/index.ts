@@ -14,11 +14,10 @@ const plugin: TSESLint.FlatConfig.Plugin = {
   configs: {},
 };
 
-const { all, recommended } = createConfigs(plugin);
+const { all } = createConfigs(plugin);
 
 Object.assign(plugin.configs!, {
   all,
-  recommended,
 });
 
 export default plugin;
