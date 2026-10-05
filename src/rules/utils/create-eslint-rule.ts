@@ -9,8 +9,6 @@ import { PrismalystRuleDocs } from '../../types/rule-docs.type.js';
 import { ESLintRule, createRule } from '../../utils/create-rule.js';
 import { RULES_MAP } from '../rules.map.js';
 
-const astUtils = createAstUtils(ts);
-
 const ruleDocs: {
   [TRuleName in keyof OptionsByRuleName]: PrismalystRuleDocs<TRuleName>;
 } = RULES_MAP;
@@ -31,6 +29,9 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
     create: function (context, [options]) {
       const services = ESLintUtils.getParserServices(context);
       const program = services.program;
+      const checker = program.getTypeChecker();
+
+      const astUtils = createAstUtils(ts, checker);
 
       switch (ruleAstType) {
         case 'callExpression':
