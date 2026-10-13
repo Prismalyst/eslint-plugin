@@ -1,3 +1,5 @@
+import { OptionsByRuleName } from '@prismalyst/core';
+
 import { PrismalystRuleDocs } from '../types/rule-docs.type.js';
 
 export const RULES_MAP = {
@@ -237,4 +239,6 @@ export const RULES_MAP = {
       schema: [],
     },
   },
-} as const satisfies Readonly<Record<string, PrismalystRuleDocs>>;
+} as const satisfies {
+  readonly [Name in keyof OptionsByRuleName]: PrismalystRuleDocs<Name>;
+};
