@@ -21,6 +21,8 @@
     "watch": "tsc -w",
     "pack": "npm pack",
     "pack:check": "npm pack --dry-run",
+    "lint": "eslint \"**/*.ts\"",
+    "lint:fix": "eslint \"**/*.ts\" --fix",
     "typecheck": "npx tsc --noEmit"
   },
   "dependencies": {
