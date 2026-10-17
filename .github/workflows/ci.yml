@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./prismalyst-eslint-plugin
+
+    steps:
+      - name: Checkout core repository
+        uses: actions/checkout@v7
+        with:
+          repository: Prismalyst/core
+          path: prismalyst-core
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          path: prismalyst-eslint-plugin
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            prismalyst-core/package-lock.json
+            prismalyst-eslint-plugin/package-lock.json
+
+      - name: Install dependencies for Core
+        working-directory: ./prismalyst-core
+        run: npm ci
+
+      - name: Build Core for ESLint plugin
+        working-directory: ./prismalyst-core
+        run: npm run build
+
+      - name: Install dependencies for ESLint plugin
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build

@@ -15,12 +15,15 @@
     "README.md"
   ],
   "scripts": {
-    "test": "vitest run",
+    "test:ci": "vitest run",
     "test:watch": "vitest",
     "build": "tsc && npx rollup dist/index.js --file dist/index.cjs --format cjs",
     "watch": "tsc -w",
     "pack": "npm pack",
-    "pack:check": "npm pack --dry-run"
+    "pack:check": "npm pack --dry-run",
+    "lint": "eslint \"**/*.ts\"",
+    "lint:fix": "eslint \"**/*.ts\" --fix",
+    "typecheck": "npx tsc --noEmit"
   },
   "dependencies": {
     "@prismalyst/core": "file:../prismalyst-core",
