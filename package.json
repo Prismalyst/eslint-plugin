@@ -26,6 +26,7 @@
     "typecheck": "npx tsc --noEmit"
   },
   "dependencies": {
+    "@prisma/get-dmmf": "^7.10.1",
     "@prismalyst/core": "file:../prismalyst-core",
     "@typescript-eslint/utils": "^8.70.0"
   },
