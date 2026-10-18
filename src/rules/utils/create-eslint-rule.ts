@@ -5,6 +5,7 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { convertToPrismaExpression, createAstUtils, isPrismaExpression } from '@prismalyst/core';
 import type { OptionsByRuleName, RegisteredRule } from '@prismalyst/core';
 
+import { getSchemaJson } from '../../schema/get-schema-json.js';
 import { PrismalystRuleDocs } from '../../types/rule-docs.type.js';
 import { ESLintRule, createRule } from '../../utils/create-rule.js';
 import { RULES_MAP } from '../rules.map.js';
@@ -45,7 +46,11 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-              const isTriggered = ruleFunction(prismaExpression, rule, options);
+              const dmmf = getSchemaJson();
+
+              if (!dmmf) return;
+
+              const isTriggered = ruleFunction(prismaExpression, rule, options, dmmf);
 
               if (isTriggered) {
                 context.report({
@@ -67,7 +72,11 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-              const isTriggered = ruleFunction(prismaExpression, rule, options);
+              const dmmf = getSchemaJson();
+
+              if (!dmmf) return;
+
+              const isTriggered = ruleFunction(prismaExpression, rule, options, dmmf);
 
               if (isTriggered) {
                 context.report({
