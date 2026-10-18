@@ -49,6 +49,8 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
         ],
         '@prismalyst/no-root-client-in-transaction':
           RULES_SEVERITY_MAP[RULES_MAP['no-root-client-in-transaction'].meta.type],
+        '@prismalyst/no-unindexed-filter':
+          RULES_SEVERITY_MAP[RULES_MAP['no-unindexed-filter'].meta.type],
       },
     },
   };
