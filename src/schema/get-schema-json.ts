@@ -1,29 +1,48 @@
 import type { Document } from '@prisma/dmmf';
 import { getDMMF } from '@prisma/get-dmmf';
-import { readFileSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
 
 import { findSchemaPath } from './utils/find-schema-path.js';
 
 let DMMF: Document | null = null;
+let schemaPath: string | null = null;
+let mTime: number;
 
 export function updateSchemaJson() {
-  const pathToSchema = findSchemaPath();
+  if (!schemaPath) {
+    schemaPath = findSchemaPath();
+  }
 
-  const schemaContent = readFileSync(pathToSchema, 'utf-8');
+  const schemaContent = readFileSync(schemaPath, 'utf-8');
 
   const schema = getDMMF({ datamodel: schemaContent });
 
   if ('error' in schema) {
-    throw new Error(`Failed to parse Prisma schema at "${pathToSchema}": ${schema.error.message}`, {
+    schemaPath = null;
+    DMMF = null;
+
+    throw new Error(`Failed to parse Prisma schema at "${schemaPath}": ${schema.error.message}`, {
       cause: schema.error,
     });
   }
 
+  const { mtimeMs } = statSync(schemaPath);
+
+  mTime = mtimeMs;
   DMMF = schema;
 }
 
 export function getSchemaJson() {
   if (!DMMF) updateSchemaJson();
+  if (!isCacheValid(schemaPath)) updateSchemaJson();
 
   return DMMF;
+}
+
+function isCacheValid(pathToSchema: string | null) {
+  if (!pathToSchema) return false;
+
+  const { mtimeMs } = statSync(pathToSchema);
+
+  return mTime === mtimeMs;
 }
