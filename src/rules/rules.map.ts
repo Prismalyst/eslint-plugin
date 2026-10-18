@@ -239,6 +239,21 @@ export const RULES_MAP = {
       schema: [],
     },
   },
+  'no-unindexed-filter': {
+    messageId: 'noUnindexedFilter',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow using unindexed filter',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noUnindexedFilter: 'Consider using indexed filter',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies {
   readonly [Name in keyof OptionsByRuleName]: PrismalystRuleDocs<Name>;
 };
