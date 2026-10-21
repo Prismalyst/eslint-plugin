@@ -50,14 +50,40 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               if (!dmmf) return;
 
-              const isTriggered = ruleFunction(prismaExpression, rule, options, dmmf);
+              const result = ruleFunction(prismaExpression, rule, options, dmmf);
 
-              if (isTriggered) {
-                context.report({
-                  node,
-                  messageId: eslintRule.messageId,
-                  data: { ...options },
-                });
+              if (typeof result === 'boolean') {
+                const isTriggered = result;
+
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
+              }
+
+              if (typeof result === 'object') {
+                const { isTriggered, nodeToHighlight } = result;
+
+                if (isTriggered) {
+                  if (!nodeToHighlight) {
+                    context.report({
+                      node,
+                      messageId: eslintRule.messageId,
+                      data: { ...options },
+                    });
+
+                    return;
+                  }
+
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
               }
             },
           };
@@ -76,14 +102,40 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               if (!dmmf) return;
 
-              const isTriggered = ruleFunction(prismaExpression, rule, options, dmmf);
+              const result = ruleFunction(prismaExpression, rule, options, dmmf);
 
-              if (isTriggered) {
-                context.report({
-                  node,
-                  messageId: eslintRule.messageId,
-                  data: { ...options },
-                });
+              if (typeof result === 'boolean') {
+                const isTriggered = result;
+
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
+              }
+
+              if (typeof result === 'object') {
+                const { isTriggered, nodeToHighlight } = result;
+
+                if (isTriggered) {
+                  if (!nodeToHighlight) {
+                    context.report({
+                      node,
+                      messageId: eslintRule.messageId,
+                      data: { ...options },
+                    });
+
+                    return;
+                  }
+
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
               }
             },
           };
