@@ -5,6 +5,7 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { convertToPrismaExpression, createAstUtils, isPrismaExpression } from '@prismalyst/core';
 import type { OptionsByRuleName, RegisteredRule } from '@prismalyst/core';
 
+import { getSchemaJson } from '../../schema/get-schema-json.js';
 import { PrismalystRuleDocs } from '../../types/rule-docs.type.js';
 import { ESLintRule, createRule } from '../../utils/create-rule.js';
 import { RULES_MAP } from '../rules.map.js';
@@ -45,14 +46,44 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-              const isTriggered = ruleFunction(prismaExpression, rule, options);
+              const dmmf = getSchemaJson();
 
-              if (isTriggered) {
-                context.report({
-                  node,
-                  messageId: eslintRule.messageId,
-                  data: { ...options },
-                });
+              if (!dmmf) return;
+
+              const result = ruleFunction(prismaExpression, rule, options, dmmf);
+
+              if (typeof result === 'boolean') {
+                const isTriggered = result;
+
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
+              }
+
+              if (typeof result === 'object') {
+                const { isTriggered, nodeToHighlight } = result;
+
+                if (isTriggered) {
+                  if (!nodeToHighlight) {
+                    context.report({
+                      node,
+                      messageId: eslintRule.messageId,
+                      data: { ...options },
+                    });
+
+                    return;
+                  }
+
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
               }
             },
           };
@@ -67,14 +98,44 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-              const isTriggered = ruleFunction(prismaExpression, rule, options);
+              const dmmf = getSchemaJson();
 
-              if (isTriggered) {
-                context.report({
-                  node,
-                  messageId: eslintRule.messageId,
-                  data: { ...options },
-                });
+              if (!dmmf) return;
+
+              const result = ruleFunction(prismaExpression, rule, options, dmmf);
+
+              if (typeof result === 'boolean') {
+                const isTriggered = result;
+
+                if (isTriggered) {
+                  context.report({
+                    node,
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
+              }
+
+              if (typeof result === 'object') {
+                const { isTriggered, nodeToHighlight } = result;
+
+                if (isTriggered) {
+                  if (!nodeToHighlight) {
+                    context.report({
+                      node,
+                      messageId: eslintRule.messageId,
+                      data: { ...options },
+                    });
+
+                    return;
+                  }
+
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
               }
             },
           };

@@ -49,6 +49,14 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
         ],
         '@prismalyst/no-root-client-in-transaction':
           RULES_SEVERITY_MAP[RULES_MAP['no-root-client-in-transaction'].meta.type],
+        '@prismalyst/no-unindexed-filter':
+          RULES_SEVERITY_MAP[RULES_MAP['no-unindexed-filter'].meta.type],
+        '@prismalyst/unstable-pagination':
+          RULES_SEVERITY_MAP[RULES_MAP['unstable-pagination'].meta.type],
+        '@prismalyst/warn-cascade-delete':
+          RULES_SEVERITY_MAP[RULES_MAP['warn-cascade-delete'].meta.type],
+        '@prismalyst/limit-relation-loading':
+          RULES_SEVERITY_MAP[RULES_MAP['limit-relation-loading'].meta.type],
       },
     },
   };

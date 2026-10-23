@@ -239,6 +239,68 @@ export const RULES_MAP = {
       schema: [],
     },
   },
+  'no-unindexed-filter': {
+    messageId: 'noUnindexedFilter',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow using unindexed filter',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        noUnindexedFilter: 'Consider using indexed filter',
+      },
+      schema: [],
+    },
+  },
+  'unstable-pagination': {
+    messageId: 'unstablePagination',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow using unstable pagination',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        unstablePagination:
+          'Pagination orderBy does not define a unique order. Add a unique tie-breaker (for example id)',
+      },
+      schema: [],
+    },
+  },
+  'warn-cascade-delete': {
+    messageId: 'warnCascadeDelete',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Warn about cascade delete',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        warnCascadeDelete: 'Deleting may cascade to related records according to schema.prisma.',
+      },
+      schema: [],
+    },
+  },
+  'limit-relation-loading': {
+    messageId: 'limitRelationLoading',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Require "take" when loading list relations through include or select',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        limitRelationLoading:
+          'Loading a list relation without "take" may return too many records. Add "take" to the relation options.',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies {
   readonly [Name in keyof OptionsByRuleName]: PrismalystRuleDocs<Name>;
 };
