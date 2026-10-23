@@ -51,6 +51,8 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
           RULES_SEVERITY_MAP[RULES_MAP['no-root-client-in-transaction'].meta.type],
         '@prismalyst/no-unindexed-filter':
           RULES_SEVERITY_MAP[RULES_MAP['no-unindexed-filter'].meta.type],
+        '@prismalyst/unstable-pagination':
+          RULES_SEVERITY_MAP[RULES_MAP['unstable-pagination'].meta.type],
       },
     },
   };

@@ -254,6 +254,22 @@ export const RULES_MAP = {
       schema: [],
     },
   },
+  'unstable-pagination': {
+    messageId: 'unstablePagination',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow using unstable pagination',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        unstablePagination:
+          'Pagination orderBy does not define a unique order. Add a unique tie-breaker (for example id)',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies {
   readonly [Name in keyof OptionsByRuleName]: PrismalystRuleDocs<Name>;
 };
