@@ -53,6 +53,8 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
           RULES_SEVERITY_MAP[RULES_MAP['no-unindexed-filter'].meta.type],
         '@prismalyst/unstable-pagination':
           RULES_SEVERITY_MAP[RULES_MAP['unstable-pagination'].meta.type],
+        '@prismalyst/warn-cascade-delete':
+          RULES_SEVERITY_MAP[RULES_MAP['warn-cascade-delete'].meta.type],
       },
     },
   };

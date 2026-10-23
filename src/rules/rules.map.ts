@@ -270,6 +270,21 @@ export const RULES_MAP = {
       schema: [],
     },
   },
+  'warn-cascade-delete': {
+    messageId: 'warnCascadeDelete',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Warn about cascade delete',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        warnCascadeDelete: 'Deleting may cascade to related records according to schema.prisma.',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies {
   readonly [Name in keyof OptionsByRuleName]: PrismalystRuleDocs<Name>;
 };
