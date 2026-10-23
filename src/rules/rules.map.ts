@@ -285,6 +285,22 @@ export const RULES_MAP = {
       schema: [],
     },
   },
+  'limit-relation-loading': {
+    messageId: 'limitRelationLoading',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Require "take" when loading list relations through include or select',
+        recommended: true,
+        requiresTypeChecking: true,
+      },
+      messages: {
+        limitRelationLoading:
+          'Loading a list relation without "take" may return too many records. Add "take" to the relation options.',
+      },
+      schema: [],
+    },
+  },
 } as const satisfies {
   readonly [Name in keyof OptionsByRuleName]: PrismalystRuleDocs<Name>;
 };

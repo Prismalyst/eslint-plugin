@@ -55,6 +55,8 @@ export function createConfigs(plugin: TSESLint.FlatConfig.Plugin) {
           RULES_SEVERITY_MAP[RULES_MAP['unstable-pagination'].meta.type],
         '@prismalyst/warn-cascade-delete':
           RULES_SEVERITY_MAP[RULES_MAP['warn-cascade-delete'].meta.type],
+        '@prismalyst/limit-relation-loading':
+          RULES_SEVERITY_MAP[RULES_MAP['limit-relation-loading'].meta.type],
       },
     },
   };
