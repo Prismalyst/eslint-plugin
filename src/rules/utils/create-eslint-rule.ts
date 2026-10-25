@@ -65,10 +65,10 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
               }
 
               if (typeof result === 'object') {
-                const { isTriggered, nodeToHighlight } = result;
+                const isTriggered = result.isTriggered;
 
                 if (isTriggered) {
-                  if (!nodeToHighlight) {
+                  if (!result.nodeToHighlight) {
                     context.report({
                       node,
                       messageId: eslintRule.messageId,
@@ -79,7 +79,7 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
                   }
 
                   context.report({
-                    node: services.tsNodeToESTreeNodeMap.get(nodeToHighlight),
+                    node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
                     messageId: eslintRule.messageId,
                     data: { ...options },
                   });
@@ -117,10 +117,10 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
               }
 
               if (typeof result === 'object') {
-                const { isTriggered, nodeToHighlight } = result;
+                const isTriggered = result.isTriggered;
 
                 if (isTriggered) {
-                  if (!nodeToHighlight) {
+                  if (!result.nodeToHighlight) {
                     context.report({
                       node,
                       messageId: eslintRule.messageId,
@@ -131,7 +131,7 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
                   }
 
                   context.report({
-                    node: services.tsNodeToESTreeNodeMap.get(nodeToHighlight),
+                    node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
                     messageId: eslintRule.messageId,
                     data: { ...options },
                   });
