@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "ESLint plugin for Prismalyst. Detect unsafe Prisma queries and common mistakes directly in your code.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prismalyst/eslint-plugin"
+  },
+  "homepage": "https://github.com/Prismalyst",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,7 +17,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "test:ci": "vitest run",
