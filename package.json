@@ -37,7 +37,7 @@
   "dependencies": {
     "@prisma/get-dmmf": "^7.10.1",
     "@prismalyst/core": "file:../prismalyst-core",
-    "@typescript-eslint/utils": "^8.71.2"
+    "@typescript-eslint/utils": "^8.72.1"
   },
   "peerDependencies": {
     "eslint": ">=10.0.0",
@@ -51,9 +51,9 @@
     "eslint": "^10.13.0",
     "globals": "^17.13.0",
     "prettier": "^3.9.10",
-    "rollup": "^4.64.8",
+    "rollup": "^4.66.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.71.2",
+    "typescript-eslint": "^8.72.1",
     "vitest": "^5.0.5"
   }
 }
