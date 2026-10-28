@@ -2,9 +2,6 @@ import type { TSESLint } from '@typescript-eslint/utils';
 
 import { createConfigs } from './config/create-configs.js';
 import { createRulesList } from './rules/create-rules-list.js';
-import { updateSchemaJson } from './schema/get-schema-json.js';
-
-updateSchemaJson();
 
 const plugin: TSESLint.FlatConfig.Plugin = {
   meta: {
