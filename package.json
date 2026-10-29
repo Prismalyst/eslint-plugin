@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@prisma/get-dmmf": "^7.10.1",
-    "@prismalyst/core": "file:../prismalyst-core",
+    "@prismalyst/core": "^0.1.0",
     "@typescript-eslint/utils": "^8.72.1"
   },
   "peerDependencies": {
