@@ -23,6 +23,7 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
   const ruleAstType = rule.astType;
   const ruleFunction = rule.function;
+  const isRequireSchema = rule.requireSchema;
 
   return createRule<readonly [OptionsByRuleName[TRuleName]], string>({
     name: ruleName,
@@ -46,20 +47,34 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-              const dmmf = getSchemaJson();
+              if (isRequireSchema) {
+                const dmmf = getSchemaJson();
 
-              if (!dmmf) return;
+                if (!dmmf) return;
 
-              const result = ruleFunction(prismaExpression, rule, options, dmmf);
+                const result = ruleFunction(prismaExpression, rule, options, dmmf);
 
-              const isTriggered = result.isTriggered;
+                const isTriggered = result.isTriggered;
 
-              if (isTriggered) {
-                context.report({
-                  node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
-                  messageId: eslintRule.messageId,
-                  data: { ...options },
-                });
+                if (isTriggered) {
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
+              } else {
+                const result = ruleFunction(prismaExpression, rule, options);
+
+                const isTriggered = result.isTriggered;
+
+                if (isTriggered) {
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
               }
             },
           };
@@ -74,20 +89,34 @@ export function createESLintRule<TRuleName extends keyof OptionsByRuleName>(
 
               const prismaExpression = convertToPrismaExpression(tsNode, program, astUtils);
 
-              const dmmf = getSchemaJson();
+              if (isRequireSchema) {
+                const dmmf = getSchemaJson();
 
-              if (!dmmf) return;
+                if (!dmmf) return;
 
-              const result = ruleFunction(prismaExpression, rule, options, dmmf);
+                const result = ruleFunction(prismaExpression, rule, options, dmmf);
 
-              const isTriggered = result.isTriggered;
+                const isTriggered = result.isTriggered;
 
-              if (isTriggered) {
-                context.report({
-                  node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
-                  messageId: eslintRule.messageId,
-                  data: { ...options },
-                });
+                if (isTriggered) {
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
+              } else {
+                const result = ruleFunction(prismaExpression, rule, options);
+
+                const isTriggered = result.isTriggered;
+
+                if (isTriggered) {
+                  context.report({
+                    node: services.tsNodeToESTreeNodeMap.get(result.nodeToHighlight),
+                    messageId: eslintRule.messageId,
+                    data: { ...options },
+                  });
+                }
               }
             },
           };
