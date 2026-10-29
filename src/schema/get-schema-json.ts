@@ -1,10 +1,10 @@
-import type { Document } from '@prisma/dmmf';
 import { getDMMF } from '@prisma/get-dmmf';
 import { readFileSync, statSync } from 'node:fs';
 
+import { DMMFType } from '../../../prismalyst-core/dist/types/rule.eslint.types.js';
 import { findSchemaPath } from './utils/find-schema-path.js';
 
-let DMMF: Document | null = null;
+let DMMF: DMMFType | null = null;
 let schemaPath: string | null = null;
 let mTime: number;
 
